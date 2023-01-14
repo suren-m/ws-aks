@@ -17,7 +17,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: go-chat
-          image: ghcr.io/suren-m/ws-go-chat:0.3
+          image: ghcr.io/suren-m/ws-go-chat:0.4
           ports:
             - containerPort: 5000
               name: web          

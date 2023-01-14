@@ -19,7 +19,7 @@ spec:
         app: chat-client
     spec:
       containers:
-      - image: ghcr.io/suren-m/ws-chat-client:0.2
+      - image: ghcr.io/suren-m/ws-chat-client:0.4
         name: chat-client
         resources: {}
 status: {}
