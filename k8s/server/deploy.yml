@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: go-chat
+  name: go-chat
+  namespace: ws
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-chat
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: go-chat
+        active: "true"
+    spec:
+      containers:
+      - image: ghcr.io/suren-m/ws-go-chat:0.2
+        name: ws-go-chat
+        resources: {}
+status: {}

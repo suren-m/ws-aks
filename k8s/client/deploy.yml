@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: chat-client
+  name: chat-client
+  namespace: ws
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chat-client
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: chat-client
+    spec:
+      containers:
+      - image: ghcr.io/suren-m/ws-chat-client:0.2
+        name: chat-client
+        resources: {}
+status: {}

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: ws
+  # don't enable mesh when using bridge to k8s
+  #labels:
+    #istio-injection: enabled
+  #annotations:
+    #linkerd.io/inject: enabled
+spec: {}
+status: {}
