@@ -22,7 +22,11 @@ func main() {
 		if err != nil {
 			hostname = "not available"
 		}
-		c.String(http.StatusOK, hostname)
+
+		nodename := os.Getenv("NODE_NAME")
+		result := hostname + " on " + nodename
+		c.String(http.StatusOK, result)
+
 	})
 
 	r.GET("/connections", func(c *gin.Context) {

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: go-chat
+spec:
+  selector:
+    matchLabels:
+      app: go-chat
+  serviceName: "go-chat"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: go-chat
+        active: "true"
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: go-chat
+          image: ghcr.io/suren-m/ws-go-chat:0.3
+          ports:
+            - containerPort: 5000
+              name: web          
+          env: # Downward API to collect deployed Nodename
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: go-chat
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workloads
+                    operator: In
+                    values:
+                      - web
+                  
