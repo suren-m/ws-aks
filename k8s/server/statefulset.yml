@@ -17,10 +17,19 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: go-chat
-          image: ghcr.io/suren-m/ws-go-chat:0.4
+          image: ghcr.io/suren-m/ws-go-chat:0.6
           ports:
             - containerPort: 5000
-              name: web          
+              name: web     
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 5000
+            initialDelaySeconds: 3
+            successThreshold: 1     
+            timeoutSeconds: 3
+            periodSeconds: 10
+            failureThreshold: 1
           env: # Downward API to collect deployed Nodename
             - name: NODE_NAME
               valueFrom:
