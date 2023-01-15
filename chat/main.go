@@ -39,6 +39,17 @@ func main() {
 		c.String(http.StatusOK, strconv.Itoa(len(activeSessions)))
 	})
 
+	r.GET("/ready", func(c *gin.Context) {
+		activeSessions, _ := m.Sessions()
+		res := len(activeSessions)
+		// demo threshold
+		if res <= 3 {
+			c.String(http.StatusOK, "success")
+		} else {
+			c.String(http.StatusTooManyRequests, "failure")
+		}
+	})
+
 	r.GET("/ws", func(c *gin.Context) {
 		m.HandleRequest(c.Writer, c.Request)
 	})
