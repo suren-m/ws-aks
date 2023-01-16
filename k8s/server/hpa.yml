@@ -23,4 +23,10 @@ spec:
         target:
           type: Utilization
           averageUtilization: 50
-    
+    # - type: External
+    #   external:
+    #     metric:
+    #       name: active_connections
+    #       selector:
+    #         matchLabels:
+              

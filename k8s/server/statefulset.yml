@@ -25,11 +25,11 @@ spec:
             httpGet:
               path: /ready
               port: 5000
-            initialDelaySeconds: 3
-            successThreshold: 1     
-            timeoutSeconds: 3
-            periodSeconds: 10
-            failureThreshold: 1
+            initialDelaySeconds: 3 # How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+            successThreshold: 1  # Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1   
+            timeoutSeconds: 3 # Number of seconds after which the probe times out. Defaults to 1
+            periodSeconds: 3 # How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1.
+            failureThreshold: 1 # After a probe fails failureThreshold times in a row
           env: # Downward API to collect deployed Nodename
             - name: NODE_NAME
               valueFrom:
