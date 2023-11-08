@@ -43,7 +43,7 @@ func main() {
 		activeSessions, _ := m.Sessions()
 		res := len(activeSessions)
 		// demo threshold
-		if res <= 3 {
+		if res <= 2 {
 			c.String(http.StatusOK, "success")
 		} else {
 			c.String(http.StatusTooManyRequests, "failure")
