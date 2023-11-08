@@ -3,19 +3,69 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: go-chat
+    app: chatroom
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-  name: go-chat
+  name: chatroom-svc
 spec:
   ports:
-    - port: 80
+    - port: 9090
       protocol: TCP
       targetPort: 5000
   selector:
-    app: go-chat
+    app: chatroom
     active: "true"
   type: LoadBalancer
-  loadBalancerIP: 10.0.25.20
+  # loadBalancerIP: 10.0.25.30
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: chatroom
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  name: chatroom-svc-0
+spec:
+  ports:
+    - port: 9080
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: chatroom
+    active: "true"
+    statefulset.kubernetes.io/pod-name: chatroom-0
+  type: LoadBalancer
+  # loadBalancerIP: 10.0.25.20
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: chatroom
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  name: chatroom-svc-1
+spec:
+  ports:
+    - port: 9081
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: chatroom
+    active: "true"
+    statefulset.kubernetes.io/pod-name: chatroom-1
+  type: LoadBalancer
+  # loadBalancerIP: 10.0.25.21
 status:
   loadBalancer: {}
