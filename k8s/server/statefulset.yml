@@ -1,23 +1,24 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: go-chat
+  name: chatroom
 spec:
   selector:
     matchLabels:
-      app: go-chat
-  serviceName: "go-chat"
+      app: chatroom
+  serviceName: "chatroom"
   replicas: 2
   template:
     metadata:
       labels:
-        app: go-chat
+        app: chatroom
         active: "true"
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - name: go-chat
-          image: ghcr.io/suren-m/ws-go-chat:0.6
+        - name: chatroom
+          image: chatroom:0.2
+          #imagePullPolicy: Always
           ports:
             - containerPort: 5000
               name: web     
@@ -39,20 +40,4 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: topology.kubernetes.io/zone
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app: go-chat
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: workloads
-                    operator: In
-                    values:
-                      - web
                   
